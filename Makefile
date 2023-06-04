@@ -1,9 +1,19 @@
 
-main: main.c
-	gcc main.c -lSDL2 -lSDL2main -o launch 
+CFLAGS = -lSDL2 -lSDL2main
+
+all: bin
+
+bin: main.o menu.o
+	gcc $(CFLAGS) main.o menu.o -o bin
+
+main.o: main.c
+	gcc $(CFLACGS) -c main.c
+
+menu.o: menu.c
+	gcc $(CFLACGS) -c menu.c
 
 clean:
-	rm -f *.o launch 
+	rm -f *.o bin
 
 
 

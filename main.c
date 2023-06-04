@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include "SDL2/SDL.h"
+#include "menu.h"
 
-#define SCREEN_WIDTH 840
+#define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 640
-#define MENU_WIDTH 200 
 
-enum State {Menu = 0, Mandelbot = 1};
+typedef enum States
+{
+	MENU = 0,
+	MANDELBROT = 1
+} States;
     
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
@@ -30,6 +34,11 @@ int main()
                                   -1,
                                   SDL_RENDERER_ACCELERATED);
 
+	States state = MENU;
+	SDL_Color button_color = { .r = 64, .g = 64, .b = 64 };
+	
+	SDL_Rect mandelbrot_button = { .x = 64, .y = 32, .w = 64, .h = 32 };
+
     SDL_bool running = SDL_TRUE;
     while (running)
     {
@@ -40,10 +49,28 @@ int main()
             {
                 running = SDL_FALSE;
             }
+
+			switch (state)
+			{
+				case MENU:
+					break;
+				case MANDELBROT:
+					break;
+			}
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
+
+		switch (state)
+		{
+			case MENU:
+				menu_color(renderer);
+				button_render(renderer, mandelbrot_button, button_color);
+				break;
+			case MANDELBROT:
+				break;
+		}
 
         SDL_RenderPresent(renderer);
         SDL_Delay(100);
