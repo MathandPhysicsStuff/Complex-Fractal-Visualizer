@@ -26,9 +26,12 @@ void button_render(SDL_Renderer *renderer, SDL_Rect button_rect, SDL_Color butto
 	SDL_RenderFillRect(renderer, &button_rect);
 }
 
-SDL_bool button_logic()
+SDL_bool button_logic(SDL_Event event, SDL_Rect button_rect, SDL_Point mouse)
 {
-
+	if (SDL_PointInRect(&mouse, &button_rect))
+	{
+		return SDL_TRUE;
+	}
 }
 
 

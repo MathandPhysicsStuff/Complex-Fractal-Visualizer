@@ -35,6 +35,7 @@ int main()
                                   SDL_RENDERER_ACCELERATED);
 
 	States state = MENU;
+
 	SDL_Color button_color = { .r = 64, .g = 64, .b = 64 };
 	
 	SDL_Rect mandelbrot_button = { .x = 64, .y = 32, .w = 64, .h = 32 };
@@ -48,11 +49,17 @@ int main()
             if (event.type == SDL_QUIT)
             {
                 running = SDL_FALSE;
+				break;
             }
 
 			switch (state)
-			{
+			{	
 				case MENU:
+					if (event.type == SDL_MOUSEBUTTONDOWN)
+					{
+						const SDL_Point mouse = { event.button.x, event.button.y };
+						if(button_logic(event, mandelbrot_button, mouse) == SDL_TRUE) { state = MANDELBROT; }
+					}
 					break;
 				case MANDELBROT:
 					break;
