@@ -18,9 +18,11 @@ static SDL_Renderer *renderer = NULL;
 
 int main()
 {
-
-	initalize();
 	
+	initalize();
+
+	SDL_Texture *mandelbrot_text, *burningship_text;
+
     window = SDL_CreateWindow("Hello SDL", 
                               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               SCREEN_WIDTH, SCREEN_HEIGHT,
@@ -30,22 +32,20 @@ int main()
                                   -1,
                                   SDL_RENDERER_ACCELERATED);
 	
-	TTF_Font* font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 32);
-	
+	TTF_Font* font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 64);
+	SDL_Color text_color = { 255, 255, 255 };
 
-	SDL_Color color = {100, 100, 100};
-	SDL_Surface* mandel_surface = TTF_RenderText_Solid(font, "mandelbrot set", color);
-	SDL_Texture* mandel_texture = SDL_CreateTextureFromSurface(renderer, mandel_surface);	
+	mandelbrot_text = create_texture(renderer, font, "Mandelbrot set", text_color);
+	burningship_text = create_texture(renderer, font, "Burning Ship", text_color);
 
-	SDL_FreeSurface(mandel_surface);
 	TTF_CloseFont(font);
 
-	States state = MENU;
-
-	SDL_Color button_color = { .r = 64, .g = 64, .b = 64 };
+	SDL_Color button_color = { .r = 96, .g = 96, .b = 96 };
 	
-	SDL_Rect mandelbrot_button = { .x = 128, .y = 32, .w = 128, .h = 32 };
+	SDL_Rect mandelbrot_button = { .x = 16, .y = 128, .w = 144, .h = 32 };
+	SDL_Rect burningship_button = { .x = 176, .y = 128, .w = 144, .h = 32 };
 
+	States state = MENU;
     SDL_bool running = SDL_TRUE;
     while (running)
     {
@@ -79,8 +79,13 @@ int main()
 		{
 			case MENU:
 				menu_color(renderer);
+
 				button_render(renderer, mandelbrot_button, button_color);
-				SDL_RenderCopy(renderer, mandel_texture, NULL, &mandelbrot_button);
+				render_texture(renderer, mandelbrot_text, mandelbrot_button);
+
+				button_render(renderer, burningship_button, button_color);
+				render_texture(renderer, burningship_text, burningship_button);
+
 				break;
 			case MANDELBROT:
 				break;
