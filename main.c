@@ -3,18 +3,20 @@
 #include "SDL2/SDL_ttf.h"
 #include "initalize_free.h"
 #include "menu.h"
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 640
+#include "mandelbrot.h"
 
 typedef enum States
 {
 	MENU = 0,
-	MANDELBROT = 1
+	MANDELBROT,
+	BURNINGSHIP 
 } States;
     
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
+
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 640;
 
 int main()
 {
@@ -88,6 +90,7 @@ int main()
 
 				break;
 			case MANDELBROT:
+				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, -2, 2, -2, 2);
 				break;
 		}
 
