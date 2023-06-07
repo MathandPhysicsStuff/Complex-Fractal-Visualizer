@@ -26,7 +26,7 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 			real_position = a;
 			imaginary_position = b;
 
-			for (int i = 0; i < 64; i++)
+			for (int i = 0; i < 256; i++)
 			{
 				next_a = a*a - b*b;
 				next_b = 2*a*b;
