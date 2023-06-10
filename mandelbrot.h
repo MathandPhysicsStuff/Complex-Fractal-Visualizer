@@ -10,6 +10,4 @@ void render_mandelbrot_set(SDL_Renderer *renderer,
 						   long double a_lower_bound, long double a_upper_bound,
 						   long double b_lower_bound, long double b_upper_bound);
 
-
-
 #endif
