@@ -20,8 +20,8 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 	{
 		for (int y = 0; y < SCREEN_HEIGHT; y++)
 		{
-			a = map(x, 0, SCREEN_WIDTH, a_lower_bound, a_upper_bound);
-			b = map(y, 0, SCREEN_HEIGHT, b_lower_bound, b_upper_bound);
+			a = fmap(x, 0, SCREEN_WIDTH, a_lower_bound, a_upper_bound);
+			b = fmap(y, 0, SCREEN_HEIGHT, b_lower_bound, b_upper_bound);
 
 			real_position = a;
 			imaginary_position = b;
