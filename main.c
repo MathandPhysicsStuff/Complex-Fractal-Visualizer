@@ -56,7 +56,7 @@ int main()
 	int m0, m1;
 	long double x_map, y_map;
 	long double x_mouse, y_mouse;
-	long double x_center = 0, y_center = 0;
+	long double x_point = 0, y_point = 0;
 	long double lx_offset = 2, ux_offset = 2;
 	long double ly_offset = 2, uy_offset = 2;
 	long double x_lower_bound;	
@@ -86,78 +86,99 @@ int main()
 			{	
 				if (event.type == SDL_MOUSEBUTTONUP)
 				{
-					if(button_logic(event, mandelbrot_button, mouse_point) == SDL_TRUE) { state = MANDELBROT; }
+					if(event.button.button == SDL_BUTTON_LEFT)
+					{
+						if(button_logic(event, mandelbrot_button, mouse_point) == SDL_TRUE) { state = MANDELBROT; }
+					}
 				}
 			}
+
+			//I realized everything other than menu will use these keys
 			else
 			{
-				if (event.type == SDL_MOUSEBUTTONUP)
+				switch (event.type)
 				{
-					left_mouse_hold = SDL_FALSE;
-				}
+					case SDL_KEYDOWN:
+						if (event.key.keysym.sym == SDLK_ESCAPE)
+						{
+							state = MENU;
+							x_point = 0, y_point = 0;
+							lx_offset = 2, ux_offset = 2;
+							ly_offset = 2, uy_offset = 2;
+						}
+						break;
+					case SDL_MOUSEBUTTONUP:
+						if (event.button.button == SDL_BUTTON_LEFT)
+						{
+							left_mouse_hold = SDL_FALSE;
+						}
+						break;
 
-				if (event.type == SDL_MOUSEBUTTONDOWN)
-				{
-					xp = mouse_point.x;
-					yp = mouse_point.y;
+					case SDL_MOUSEBUTTONDOWN:
+						if (event.button.button == SDL_BUTTON_LEFT)
+						{
+							xp = mouse_point.x;
+							yp = mouse_point.y;
 
-					left_mouse_hold = SDL_TRUE;
-				}
+							left_mouse_hold = SDL_TRUE;
+						}
+						break;
 				
-				//Zooming into the fractal
-				if (event.type == SDL_MOUSEWHEEL)
-				{
-					if (event.wheel.y > 0)
-					{
-						SDL_GetMouseState(&m0, &m1); 
+					//Zooming into the fractal
+					case SDL_MOUSEWHEEL:
 
-						x_mouse = fmap(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
-						y_mouse = fmap(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
-						
-						x_center = x_mouse;
-						y_center = y_mouse;
+						//Zooming in
+						if (event.wheel.y > 0)
+						{
+							SDL_GetMouseState(&m0, &m1); 
 
-						lx_offset = x_center - x_lower_bound;
-						ux_offset = x_upper_bound - x_center;
-						ly_offset = y_center - y_lower_bound;
-						uy_offset = y_upper_bound - y_center;
-	
-						lx_offset *= 0.8;
-						ux_offset *= 0.8;
-						ly_offset *= 0.8;
-						uy_offset *= 0.8;
-					}
+							x_mouse = fmap(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
+							y_mouse = fmap(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
+							
+							x_point = x_mouse;
+							y_point = y_mouse;
 
-					if (event.wheel.y < 0)
-					{
-						SDL_GetMouseState(&m0, &m1); 
+							lx_offset = x_point - x_lower_bound;
+							ux_offset = x_upper_bound - x_point;
+							ly_offset = y_point - y_lower_bound;
+							uy_offset = y_upper_bound - y_point;
+		
+							lx_offset *= 0.8;
+							ux_offset *= 0.8;
+							ly_offset *= 0.8;
+							uy_offset *= 0.8;
+						}	
+						//Zooming out
+						if (event.wheel.y < 0)
+						{
+							SDL_GetMouseState(&m0, &m1); 
 
-						x_mouse = fmap(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
-						y_mouse = fmap(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
-						
-						x_center = x_mouse;
-						y_center = y_mouse;
+							x_mouse = fmap(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
+							y_mouse = fmap(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
+							
+							x_point = x_mouse;
+							y_point = y_mouse;
 
-						lx_offset = x_center - x_lower_bound;
-						ux_offset = x_upper_bound - x_center;
-						ly_offset = y_center - y_lower_bound;
-						uy_offset = y_upper_bound - y_center;
-	
-						lx_offset *= 1.2;
-						ux_offset *= 1.2;
-						ly_offset *= 1.2;
-						uy_offset *= 1.2;
-					}
-				}
-				
+							lx_offset = x_point - x_lower_bound;
+							ux_offset = x_upper_bound - x_point;
+							ly_offset = y_point - y_lower_bound;
+							uy_offset = y_upper_bound - y_point;
+		
+							lx_offset *= 1.2;
+							ux_offset *= 1.2;
+							ly_offset *= 1.2;
+							uy_offset *= 1.2;
+						}
+						break;
+				}	
 				//Moving around the fractal
 				if (left_mouse_hold == SDL_TRUE)
 				{
 					x_map = fmap(xp - mouse_point.x, 0, SCREEN_WIDTH, 0, x_upper_bound - x_lower_bound);
 					y_map = fmap(yp - mouse_point.y, 0, SCREEN_HEIGHT, 0, y_upper_bound - y_lower_bound);
 					
-					x_center += x_map;	
-					y_center += y_map;
+					x_point += x_map;	
+					y_point += y_map;
 						
 					xp = mouse_point.x;
 					yp = mouse_point.y;
@@ -165,10 +186,10 @@ int main()
 			}
         }
 		
-		x_lower_bound = x_center - lx_offset;
-		x_upper_bound = x_center + ux_offset;
-		y_lower_bound = y_center - ly_offset;
-		y_upper_bound = y_center + uy_offset;
+		x_lower_bound = x_point - lx_offset;
+		x_upper_bound = x_point + ux_offset;
+		y_lower_bound = y_point - ly_offset;
+		y_upper_bound = y_point + uy_offset;
 				
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
@@ -183,8 +204,8 @@ int main()
 
 				button_render(renderer, burningship_button, button_color);
 				render_texture(renderer, burningship_text, burningship_button);
-
 				break;
+
 			case MANDELBROT:
 				render_mandelbrot_set(renderer,
 				SCREEN_WIDTH, SCREEN_HEIGHT,
