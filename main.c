@@ -5,6 +5,8 @@
 #include "menu.h"
 #include "map.h"
 #include "mandelbrot.h"
+#include "event_inputs.h"
+
 
 typedef enum States
 {
@@ -64,6 +66,29 @@ int main()
 	long double y_lower_bound;	
 	long double y_upper_bound;
 
+	typedef struct FractalData
+	{
+		int x_mp, y_mp;		//mouse point
+		int nx_mp, ny_mp;	//new mouse point
+		long double fx_mp, fy_mp;	//floating mouse point
+		
+		long double x_point , y_point;	//point on the screen to zoom over
+		long double lx_off, ux_off;		//x lower/upper offsets
+		long double ly_off, uy_off;		//y lower/upper offsets
+
+		long double xlb, xub;	//x lower/upper bounds	
+		long double ylb, yub;	//y lower/upper bounds	
+
+		int sw, sh;		//screen width and height
+	} FractalData;
+
+	FractalData fractal = {
+						   .x_point = 0, .y_point = 0,
+						   .lx_off = 2,  .ux_off = 2,
+						   .ly_off = 2,  .uy_off = 2, 
+						   .sw = SCREEN_WIDTH, .sh = SCREEEN_HEIGHT
+						   }; 
+
 	SDL_Rect rect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 1, 1};
 
 	SDL_bool left_mouse_hold = SDL_FALSE;
@@ -96,8 +121,13 @@ int main()
 			//I realized everything other than menu will use these keys
 			else
 			{
+				if (key_events(event, &x_point, &y_point, &lx_offset, &ux_offset, &ly_offset, &uy_offset) == 0)
+				{
+					state = MENU;
+				}
 				switch (event.type)
 				{
+					/*	
 					case SDL_KEYDOWN:
 						if (event.key.keysym.sym == SDLK_ESCAPE)
 						{
@@ -107,6 +137,7 @@ int main()
 							ly_offset = 2, uy_offset = 2;
 						}
 						break;
+					*/	
 					case SDL_MOUSEBUTTONUP:
 						if (event.button.button == SDL_BUTTON_LEFT)
 						{
@@ -171,6 +202,8 @@ int main()
 						}
 						break;
 				}	
+				
+				
 				//Moving around the fractal
 				if (left_mouse_hold == SDL_TRUE)
 				{
@@ -183,6 +216,7 @@ int main()
 					xp = mouse_point.x;
 					yp = mouse_point.y;
 				}
+				
 			}
         }
 		
