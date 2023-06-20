@@ -7,6 +7,4 @@ long double map(long double number,
 				long double lower_bound, long double upper_bound,
 				long double new_lower_bound, long double new_upper_bound);
 
-void fractal_map(int number, const FractalData *f, FractalData *output);
-
 #endif

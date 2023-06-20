@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
+#include "initalize_free.h"
 
 void initalize()
 {

@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
 #include "menu.h"
 
 void menu_color(SDL_Renderer *renderer)
