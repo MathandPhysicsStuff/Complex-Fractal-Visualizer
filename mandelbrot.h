@@ -3,11 +3,9 @@
 
 #include <stdio.h>
 #include "SDL2/SDL.h"
-#include <immintrin.h>
+#include "fractal_struct.h"
+#include "map.h"
 
-void render_mandelbrot_set(SDL_Renderer *renderer,
-						   int SCREEN_WIDTH, int SCREEN_HEIGHT,
-						   long double a_lower_bound, long double a_upper_bound,
-						   long double b_lower_bound, long double b_upper_bound);
+void render_mandelbrot_set(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f);
 
 #endif

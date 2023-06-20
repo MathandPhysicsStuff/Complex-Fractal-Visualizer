@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "event_inputs.h"
 
 int key_events(SDL_Event event,

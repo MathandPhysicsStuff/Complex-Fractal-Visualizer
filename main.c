@@ -1,6 +1,8 @@
 #include <stdio.h>
+
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+#include "fractal_struct.h"
 #include "initalize_free.h"
 #include "menu.h"
 #include "map.h"
@@ -66,28 +68,12 @@ int main()
 	long double y_lower_bound;	
 	long double y_upper_bound;
 
-	typedef struct FractalData
-	{
-		int x_mp, y_mp;		//mouse point
-		int nx_mp, ny_mp;	//new mouse point
-		long double fx_mp, fy_mp;	//floating mouse point
-		
-		long double x_point , y_point;	//point on the screen to zoom over
-		long double lx_off, ux_off;		//x lower/upper offsets
-		long double ly_off, uy_off;		//y lower/upper offsets
-
-		long double xlb, xub;	//x lower/upper bounds	
-		long double ylb, yub;	//y lower/upper bounds	
-
-		int sw, sh;		//screen width and height
-	} FractalData;
-
-	FractalData fractal = {
-						   .x_point = 0, .y_point = 0,
-						   .lx_off = 2,  .ux_off = 2,
-						   .ly_off = 2,  .uy_off = 2, 
-						   .sw = SCREEN_WIDTH, .sh = SCREEEN_HEIGHT
-						   }; 
+	FractalData f = {
+					 .x_point = 0, .y_point = 0,
+				     .lxoff = 2,  .uxoff = 2,
+				     .lyoff = 2,  .uyoff = 2, 
+				     .iter = 256
+				    }; 
 
 	SDL_Rect rect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 1, 1};
 
@@ -127,17 +113,6 @@ int main()
 				}
 				switch (event.type)
 				{
-					/*	
-					case SDL_KEYDOWN:
-						if (event.key.keysym.sym == SDLK_ESCAPE)
-						{
-							state = MENU;
-							x_point = 0, y_point = 0;
-							lx_offset = 2, ux_offset = 2;
-							ly_offset = 2, uy_offset = 2;
-						}
-						break;
-					*/	
 					case SDL_MOUSEBUTTONUP:
 						if (event.button.button == SDL_BUTTON_LEFT)
 						{
@@ -163,8 +138,8 @@ int main()
 						{
 							SDL_GetMouseState(&m0, &m1); 
 
-							x_mouse = fmap(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
-							y_mouse = fmap(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
+							x_mouse = map(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
+							y_mouse = map(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
 							
 							x_point = x_mouse;
 							y_point = y_mouse;
@@ -184,8 +159,8 @@ int main()
 						{
 							SDL_GetMouseState(&m0, &m1); 
 
-							x_mouse = fmap(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
-							y_mouse = fmap(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
+							x_mouse = map(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
+							y_mouse = map(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
 							
 							x_point = x_mouse;
 							y_point = y_mouse;
@@ -207,8 +182,8 @@ int main()
 				//Moving around the fractal
 				if (left_mouse_hold == SDL_TRUE)
 				{
-					x_map = fmap(xp - mouse_point.x, 0, SCREEN_WIDTH, 0, x_upper_bound - x_lower_bound);
-					y_map = fmap(yp - mouse_point.y, 0, SCREEN_HEIGHT, 0, y_upper_bound - y_lower_bound);
+					x_map = map(xp - mouse_point.x, 0, SCREEN_WIDTH, 0, x_upper_bound - x_lower_bound);
+					y_map = map(yp - mouse_point.y, 0, SCREEN_HEIGHT, 0, y_upper_bound - y_lower_bound);
 					
 					x_point += x_map;	
 					y_point += y_map;
@@ -224,6 +199,11 @@ int main()
 		x_upper_bound = x_point + ux_offset;
 		y_lower_bound = y_point - ly_offset;
 		y_upper_bound = y_point + uy_offset;
+
+		f.xlb = f.x_point - f.lxoff;
+		f.xub = f.x_point + f.uxoff;
+		f.ylb = f.y_point - f.lyoff;
+		f.yub = f.y_point + f.uyoff;
 				
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
@@ -241,9 +221,8 @@ int main()
 				break;
 
 			case MANDELBROT:
-				render_mandelbrot_set(renderer,
-				SCREEN_WIDTH, SCREEN_HEIGHT,
-				x_lower_bound, x_upper_bound, y_lower_bound, y_upper_bound);
+				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+
 				SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 				SDL_RenderDrawRect(renderer, &rect);
 				break;

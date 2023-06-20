@@ -1,6 +1,7 @@
 #ifndef EVENT_INPUTS_H 
-#define EVENT_INPUTS_H 
+#define EVENT_INPUTS_H
 
+#include <stdio.h>
 #include "SDL2/SDL.h"
 #include "map.h"
 
