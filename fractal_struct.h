@@ -19,6 +19,7 @@ typedef struct FractalData
 	int iter;
 	
 	//Fractal variables
+	long double n;
 	long double a, b;
 	long double na, nb;		//next a/b
 	long double rp, ip;		//real part imaginary part

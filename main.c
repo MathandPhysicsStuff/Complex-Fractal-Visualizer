@@ -56,18 +56,6 @@ int main()
 
 	States state = MENU;
 
-	int xp, yp;
-	int m0, m1;
-	long double x_map, y_map;
-	long double x_mouse, y_mouse;
-	long double x_point = 0, y_point = 0;
-	long double lx_offset = 2, ux_offset = 2;
-	long double ly_offset = 2, uy_offset = 2;
-	long double x_lower_bound;	
-	long double x_upper_bound;	
-	long double y_lower_bound;	
-	long double y_upper_bound;
-
 	FractalData f = {
 					 .x_point = 0, .y_point = 0,
 				     .lxoff = 2,  .uxoff = 2,
@@ -85,121 +73,35 @@ int main()
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-			SDL_Point mouse_point = { event.button.x, event.button.y };
+			SDL_Point mouse = { event.button.x, event.button.y };
 
             if (event.type == SDL_QUIT)
             {
                 running = SDL_FALSE;
 				break;
             }
-
-			if (state == MENU)	
-			{	
+			
+			switch (state)
+			{
+				
+			case MENU:		
 				if (event.type == SDL_MOUSEBUTTONUP)
 				{
 					if(event.button.button == SDL_BUTTON_LEFT)
 					{
-						if(button_logic(event, mandelbrot_button, mouse_point) == SDL_TRUE) { state = MANDELBROT; }
+						if(button_logic(event, mandelbrot_button, mouse) == SDL_TRUE) { state = MANDELBROT; }
 					}
 				}
+				break;
+			
+			case MANDELBROT:
+				if (key_events(event, &f) == 0) { state = MENU; }
+				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				break;
 			}
-
-			//I realized everything other than menu will use these keys
-			else
-			{
-				if (key_events(event, &x_point, &y_point, &lx_offset, &ux_offset, &ly_offset, &uy_offset) == 0)
-				{
-					state = MENU;
-				}
-				switch (event.type)
-				{
-					case SDL_MOUSEBUTTONUP:
-						if (event.button.button == SDL_BUTTON_LEFT)
-						{
-							left_mouse_hold = SDL_FALSE;
-						}
-						break;
-
-					case SDL_MOUSEBUTTONDOWN:
-						if (event.button.button == SDL_BUTTON_LEFT)
-						{
-							xp = mouse_point.x;
-							yp = mouse_point.y;
-
-							left_mouse_hold = SDL_TRUE;
-						}
-						break;
-				
-					//Zooming into the fractal
-					case SDL_MOUSEWHEEL:
-
-						//Zooming in
-						if (event.wheel.y > 0)
-						{
-							SDL_GetMouseState(&m0, &m1); 
-
-							x_mouse = map(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
-							y_mouse = map(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
-							
-							x_point = x_mouse;
-							y_point = y_mouse;
-
-							lx_offset = x_point - x_lower_bound;
-							ux_offset = x_upper_bound - x_point;
-							ly_offset = y_point - y_lower_bound;
-							uy_offset = y_upper_bound - y_point;
-		
-							lx_offset *= 0.8;
-							ux_offset *= 0.8;
-							ly_offset *= 0.8;
-							uy_offset *= 0.8;
-						}	
-						//Zooming out
-						if (event.wheel.y < 0)
-						{
-							SDL_GetMouseState(&m0, &m1); 
-
-							x_mouse = map(m0, 0, SCREEN_WIDTH, x_lower_bound ,x_upper_bound);
-							y_mouse = map(m1, 0, SCREEN_HEIGHT, y_lower_bound ,y_upper_bound);
-							
-							x_point = x_mouse;
-							y_point = y_mouse;
-
-							lx_offset = x_point - x_lower_bound;
-							ux_offset = x_upper_bound - x_point;
-							ly_offset = y_point - y_lower_bound;
-							uy_offset = y_upper_bound - y_point;
-		
-							lx_offset *= 1.2;
-							ux_offset *= 1.2;
-							ly_offset *= 1.2;
-							uy_offset *= 1.2;
-						}
-						break;
-				}	
-				
-				
-				//Moving around the fractal
-				if (left_mouse_hold == SDL_TRUE)
-				{
-					x_map = map(xp - mouse_point.x, 0, SCREEN_WIDTH, 0, x_upper_bound - x_lower_bound);
-					y_map = map(yp - mouse_point.y, 0, SCREEN_HEIGHT, 0, y_upper_bound - y_lower_bound);
-					
-					x_point += x_map;	
-					y_point += y_map;
-						
-					xp = mouse_point.x;
-					yp = mouse_point.y;
-				}
-				
-			}
-        }
-		
-		x_lower_bound = x_point - lx_offset;
-		x_upper_bound = x_point + ux_offset;
-		y_lower_bound = y_point - ly_offset;
-		y_upper_bound = y_point + uy_offset;
-
+		}
+			
 		f.xlb = f.x_point - f.lxoff;
 		f.xub = f.x_point + f.uxoff;
 		f.ylb = f.y_point - f.lyoff;

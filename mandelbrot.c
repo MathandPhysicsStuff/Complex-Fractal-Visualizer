@@ -11,7 +11,6 @@ void render_mandelbrot_set(SDL_Renderer* renderer, int screen_width, int screen_
 	{
 		for (int y = 0; y < screen_height; y++)
 		{
-			//mapping
 			f->a = f->xlb + x * (f->xub - f->xlb) / screen_width;
 			f->b = f->ylb + y * (f->yub - f->ylb) / screen_height;
 

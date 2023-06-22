@@ -10,4 +10,3 @@ long double map(long double number,
 
 
 
-

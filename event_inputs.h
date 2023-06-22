@@ -3,12 +3,11 @@
 
 #include <stdio.h>
 #include "SDL2/SDL.h"
+#include "fractal_struct.h"
 #include "map.h"
 
-int key_events(SDL_Event event,
-			   long double *x_point, long double *y_point,
-			   long double *lx_offset, long double *ux_offset,
-			   long double *ly_offset, long double *uy_offset);
-
+int key_events(SDL_Event event, FractalData *f);
+void mouse_button_events(SDL_Event event, SDL_bool *holdm, int screen_width, int screen_height, FractalData *f);
+void scrollwheel_events(SDL_Event event, int screen_width, int screen_height, FractalData *f);
 
 #endif
