@@ -1,8 +1,6 @@
-#include "mandelbrot.h"
-#include "map.h"
+#include "fractals.h"
 
-
-void render_mandelbrot_set(SDL_Renderer* renderer, int screen_width, int screen_height, FractalData *f)
+void render_mandelbrot_set(SDL_Renderer* renderer, int screen_width, int screen_height, FractalData *f, colorf cf)
 {	
 	double hue;
 	int color[3];
@@ -16,36 +14,13 @@ void render_mandelbrot_set(SDL_Renderer* renderer, int screen_width, int screen_
 
 			f->rp = f->a;
 			f->ip = f->b;
-
-			for (int i = 0; i < f->iter; i++)
-			{
-				f->na = f->a * f->a - f->b * f->b;
-				f->nb = 2 * f->a * f->b;
-
-				f->a = f->na + f->rp;
-				f->b = f->nb + f->ip;
 			
-				if (f->a * f->a + f->b * f->b > 4)
-				{
-					color[0] = i%256;	
-					color[1] = i%256;	
-					color[2] = i%256;
-					break; 
-				}
-				else
-				{
-					color[0] = 0;	
-					color[1] = 0;	
-					color[2] = 0;	
-				}
-			}   
-		 	SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
+			cf(f, color);
+			SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 			SDL_RenderDrawPoint(renderer, x, y);
 		}
 	}	
 }
-
-
 
 
 

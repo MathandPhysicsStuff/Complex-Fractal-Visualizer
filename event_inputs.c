@@ -3,10 +3,6 @@
 
 int key_events(SDL_Event event, FractalData *f)
 {
-	long double zoom_in = 0.8;
-	long double zoom_out = 1.2;
-	long double step = 0.05;
-
 	if (event.type == SDL_KEYDOWN)
 	{
 		switch (event.key.keysym.sym)
@@ -15,6 +11,7 @@ int key_events(SDL_Event event, FractalData *f)
 				f->x_point = 0, f->y_point = 0;
 				f->lxoff = 2, f->uxoff = 2;
 				f->lyoff = 2, f->uyoff = 2;
+				f->iter = 64;
 				return 0;	
 				break;
 

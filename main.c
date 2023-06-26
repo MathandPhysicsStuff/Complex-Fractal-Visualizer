@@ -5,9 +5,10 @@
 #include "fractal_struct.h"
 #include "initalize_free.h"
 #include "menu.h"
+#include "fractals.h"
 #include "map.h"
-#include "mandelbrot.h"
 #include "event_inputs.h"
+#include "colors.h"
 
 
 typedef enum States
@@ -61,7 +62,9 @@ int main()
 				     .lxoff = 2,  .uxoff = 2,
 				     .lyoff = 2,  .uyoff = 2, 
 				     .iter = 256
-				    }; 
+				    };
+
+	colorf fractal_color = &gray_scale;
 
 	SDL_Rect rect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 1, 1};
 
@@ -123,7 +126,7 @@ int main()
 				break;
 
 			case MANDELBROT:
-				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
 
 				SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 				SDL_RenderDrawRect(renderer, &rect);
