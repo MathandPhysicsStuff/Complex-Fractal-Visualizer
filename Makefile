@@ -1,5 +1,5 @@
 
-CFLAGS = -O3 -mavx2 -lSDL2 -lSDL2main -lSDL2_ttf
+CFLAGS = -O3 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf 
 
 all: bin
 

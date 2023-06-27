@@ -2,6 +2,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+
 #include "fractal_struct.h"
 #include "initalize_free.h"
 #include "menu.h"
@@ -31,7 +32,9 @@ int main()
 
 	initalize();
 
-	SDL_Texture *mandelbrot_text, *burningship_text;
+	SDL_Texture *fractals_text, *colors_text;
+	SDL_Texture *mandelbrot_text, *burningship_text, *tricorn_text;
+	SDL_Texture *gray_scale_text, *hsb_text;
 
 	window = SDL_CreateWindow("Hello SDL", 
 							  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -43,17 +46,38 @@ int main()
 								  SDL_RENDERER_ACCELERATED);
 
 	TTF_Font* font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 64);
-	SDL_Color text_color = { 255, 255, 255 };
+	TTF_Font* font2 = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+	SDL_Color text_color = { 220, 220, 220 };
 
-	mandelbrot_text = create_texture(renderer, font, "Mandelbrot set", text_color);
+	//Titles
+	fractals_text = create_texture(renderer, font, "Fractals", text_color);
+	colors_text = create_texture(renderer, font, "Colors", text_color);
+	
+	//Fractals text
+	mandelbrot_text = create_texture(renderer, font, "Mandelbrot Set", text_color);
 	burningship_text = create_texture(renderer, font, "Burning Ship", text_color);
+	tricorn_text = create_texture(renderer, font, "Mandelbar Set", text_color);
+
+	//Colors text
+	gray_scale_text = create_texture(renderer, font, "Gray Scale", text_color);
+	hsb_text = create_texture(renderer, font2, "HSB", text_color);
 
 	TTF_CloseFont(font);
 
 	SDL_Color button_color = { .r = 96, .g = 96, .b = 96 };
+
+	//Titles buttons rects
+	SDL_Rect fractals_button = { .x = 152, .y = 16, .w = 176, .h = 64 };
+	SDL_Rect colors_button = { .x = 496, .y = 32, .w = 128, .h = 42 };
 	
-	SDL_Rect mandelbrot_button = { .x = 16, .y = 128, .w = 144, .h = 32 };
-	SDL_Rect burningship_button = { .x = 176, .y = 128, .w = 144, .h = 32 };
+	//fractal button rects	
+	SDL_Rect mandelbrot_button = { .x = 24, .y = 96, .w = 128, .h = 32 };
+	SDL_Rect burningship_button = { .x = 176, .y = 96, .w = 128, .h = 32 };
+	SDL_Rect tricorn_button = { .x = 328, .y = 96, .w = 136, .h = 32 };
+
+	//color button rects
+	SDL_Rect gray_scale_button = { .x = 504, .y = 96, .w = 112, .h = 32 };
+	SDL_Rect hsb_button = { .x = 504, .y = 144, .w = 112, .h = 32 };
 
 	States state = MENU;
 
@@ -65,8 +89,6 @@ int main()
 				    };
 
 	colorf fractal_color = &gray_scale;
-
-	SDL_Rect rect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 1, 1};
 
 	SDL_bool left_mouse_hold = SDL_FALSE;
 	
@@ -93,6 +115,9 @@ int main()
 					if(event.button.button == SDL_BUTTON_LEFT)
 					{
 						if(button_logic(event, mandelbrot_button, mouse) == SDL_TRUE) { state = MANDELBROT; }
+
+						if(button_logic(event, gray_scale_button, mouse) == SDL_TRUE) { fractal_color = &gray_scale; }
+						else if(button_logic(event, hsb_button, mouse) == SDL_TRUE) { fractal_color = &hsv; }
 					}
 				}
 				break;
@@ -118,18 +143,31 @@ int main()
 			case MENU:
 				menu_color(renderer);
 
+				SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255);
+				SDL_RenderDrawLine(renderer, 484, 0, 484, 640);
+
+				render_texture(renderer, fractals_text, fractals_button);
+				render_texture(renderer, colors_text, colors_button);
+
 				button_render(renderer, mandelbrot_button, button_color);
 				render_texture(renderer, mandelbrot_text, mandelbrot_button);
 
 				button_render(renderer, burningship_button, button_color);
 				render_texture(renderer, burningship_text, burningship_button);
+
+				button_render(renderer, tricorn_button, button_color);
+				render_texture(renderer, tricorn_text, tricorn_button);
+
+				button_render(renderer, gray_scale_button, button_color);
+				render_texture(renderer, gray_scale_text, gray_scale_button);
+
+				button_render(renderer, hsb_button, button_color);
+				render_texture(renderer, hsb_text, hsb_button);
 				break;
 
 			case MANDELBROT:
-				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
 
-				SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-				SDL_RenderDrawRect(renderer, &rect);
+				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
 				break;
 		}
 
