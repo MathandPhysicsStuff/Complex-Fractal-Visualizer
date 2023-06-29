@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
@@ -48,6 +49,7 @@ int main()
 	TTF_Font* font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 64);
 	TTF_Font* font2 = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
 	SDL_Color text_color = { 220, 220, 220 };
+	SDL_Color timespec_text_color = { 0, 255, 0 };
 
 	//Titles
 	fractals_text = create_texture(renderer, font, "Fractals", text_color);
@@ -63,6 +65,7 @@ int main()
 	hsb_text = create_texture(renderer, font2, "HSB", text_color);
 
 	TTF_CloseFont(font);
+	TTF_CloseFont(font2);
 
 	SDL_Color button_color = { .r = 96, .g = 96, .b = 96 };
 
@@ -93,6 +96,17 @@ int main()
 	SDL_bool left_mouse_hold = SDL_FALSE;
 	
     SDL_bool running = SDL_TRUE;
+	
+	//benchmarking code on linux
+	struct timespec begin;
+	struct timespec end;
+	double time_spent;
+	char time_spent_str[20];
+
+	SDL_Rect timespec_button = { .x = 20, .y = 20, .w = 64, .h = 24 };
+	SDL_Texture* timespec_text;	
+	TTF_Font* timespec_font;
+
     while (running)
     {
         SDL_Event event;
@@ -167,7 +181,21 @@ int main()
 
 			case MANDELBROT:
 
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+
 				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+
+				timespec_get(&end, TIME_UTC);
+
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+
+				render_texture(renderer, timespec_text, timespec_button);
+
 				break;
 		}
 
