@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "SDL2/SDL.h"
 #include "fractal_struct.h"
-#include "map.h"
 
 int key_events(SDL_Event event, FractalData *f);
 void mouse_button_events(SDL_Event event, SDL_bool *holdm, int screen_width, int screen_height, FractalData *f);

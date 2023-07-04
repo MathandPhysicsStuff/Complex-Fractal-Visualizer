@@ -8,7 +8,7 @@
 #include "initalize_free.h"
 #include "menu.h"
 #include "fractals.h"
-#include "map.h"
+//#include "map.h"
 #include "event_inputs.h"
 #include "colors.h"
 
@@ -184,16 +184,15 @@ int main()
 				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
 				timespec_get(&begin, TIME_UTC);
 
-				render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+				//render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+				SIMD_render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
 
 				timespec_get(&end, TIME_UTC);
-
 				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
 				sprintf(time_spent_str, "%f", time_spent);
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-
 				render_texture(renderer, timespec_text, timespec_button);
 
 				break;

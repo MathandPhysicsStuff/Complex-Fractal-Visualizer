@@ -1,9 +1,9 @@
 
-CFLAGS = -O3 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf 
+CFLAGS = -O2 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf 
 
 all: bin
 
-bin: main.o menu.o initalize_free.o mandelbrot.o event_inputs.o colors.o
+bin: main.o menu.o initalize_free.o mandelbrot.o event_inputs.o colors.o 
 	gcc $(CFLAGS) main.o menu.o initalize_free.o mandelbrot.o event_inputs.o colors.o -o bin
 
 main.o: main.c

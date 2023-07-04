@@ -2,13 +2,14 @@
 #define COLORS_H
 
 #include <math.h>
+#include <stdio.h>
 
 #include "SDL2/SDL.h"
 #include "fractal_struct.h"
 
-typedef void (*colorf)(FractalData*, int*);
+typedef void (*colorf)(int*, int, int);
 
-void gray_scale(FractalData *f, int *color);
-void hsv(FractalData *f, int *color);
+void gray_scale(int *color, int i, int brightness);
+void hsv(int *color, int i, int brightness);
 
 #endif 
