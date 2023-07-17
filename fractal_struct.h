@@ -4,7 +4,6 @@
 
 typedef struct FractalData
 {
-
 	int x_mp, y_mp;     //mouse point
 	int nx_mp, ny_mp;   //new mouse point
 	double fx_mp, fy_mp;   //floating mouse point
@@ -15,7 +14,8 @@ typedef struct FractalData
 
 	double xlb, xub;   //x lower/upper bounds  
 	double ylb, yub;   //y lower/upper bounds  
-
+	
+	//start and stop for iteration	
 	int iter;
 	
 	//Fractal variables

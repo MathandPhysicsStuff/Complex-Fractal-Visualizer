@@ -8,7 +8,6 @@
 #include "initalize_free.h"
 #include "menu.h"
 #include "fractals.h"
-//#include "map.h"
 #include "event_inputs.h"
 #include "colors.h"
 
@@ -17,9 +16,10 @@ typedef enum States
 {
 	MENU = 0,
 	MANDELBROT,
+	MANDELBAR,
 	BURNINGSHIP 
 } States;
-    
+
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
@@ -88,7 +88,7 @@ int main()
 					 .x_point = 0, .y_point = 0,
 				     .lxoff = 2,  .uxoff = 2,
 				     .lyoff = 2,  .uyoff = 2, 
-				     .iter = 256
+				     .iter = 1024
 				    };
 
 	colorf fractal_color = &gray_scale;
@@ -129,6 +129,8 @@ int main()
 					if(event.button.button == SDL_BUTTON_LEFT)
 					{
 						if(button_logic(event, mandelbrot_button, mouse) == SDL_TRUE) { state = MANDELBROT; }
+						if(button_logic(event, tricorn_button, mouse) == SDL_TRUE) { state = MANDELBAR; }
+						if(button_logic(event, burningship_button, mouse) == SDL_TRUE) { state = BURNINGSHIP; }
 
 						if(button_logic(event, gray_scale_button, mouse) == SDL_TRUE) { fractal_color = &gray_scale; }
 						else if(button_logic(event, hsb_button, mouse) == SDL_TRUE) { fractal_color = &hsv; }
@@ -137,6 +139,18 @@ int main()
 				break;
 			
 			case MANDELBROT:
+				if (key_events(event, &f) == 0) { state = MENU; }
+				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				break;
+			
+			case MANDELBAR:
+				if (key_events(event, &f) == 0) { state = MENU; }
+				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
+				break;
+	
+			case BURNINGSHIP:
 				if (key_events(event, &f) == 0) { state = MENU; }
 				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
 				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
@@ -177,16 +191,17 @@ int main()
 
 				button_render(renderer, hsb_button, button_color);
 				render_texture(renderer, hsb_text, hsb_button);
+
 				break;
 
 			case MANDELBROT:
 
 				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
 				timespec_get(&begin, TIME_UTC);
-
+				
 				//render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
 				SIMD_render_mandelbrot_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
-
+			
 				timespec_get(&end, TIME_UTC);
 				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
 				sprintf(time_spent_str, "%f", time_spent);
@@ -196,6 +211,42 @@ int main()
 				render_texture(renderer, timespec_text, timespec_button);
 
 				break;
+
+			case MANDELBAR:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_mandelbar_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+			case BURNINGSHIP:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_burningship(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+
 		}
 
         SDL_RenderPresent(renderer);

@@ -3,8 +3,8 @@ CFLAGS = -O2 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf
 
 all: bin
 
-bin: main.o menu.o initalize_free.o mandelbrot.o event_inputs.o colors.o 
-	gcc $(CFLAGS) main.o menu.o initalize_free.o mandelbrot.o event_inputs.o colors.o -o bin
+bin: main.o menu.o initalize_free.o mandelbrot.o burningship.o mandelbar.o event_inputs.o colors.o 
+	gcc $(CFLAGS) main.o menu.o initalize_free.o mandelbrot.o burningship.o mandelbar.o event_inputs.o colors.o -o bin
 
 main.o: main.c
 	gcc $(CFLACGS) -c main.c
@@ -17,6 +17,12 @@ initalize_free.o:
 
 mandelbrot.o: mandelbrot.c
 	gcc $(CFLAGS) -c mandelbrot.c
+
+burningship.o: burningship.c
+	gcc $(CFLAGS) -c burningship.c
+
+mandelbar.o: mandelbar.c
+	gcc $(CFLAGS) -c mandelbar.c
 
 event_inputs.o: event_inputs.c
 	gcc $(CFLAGS) -c event_inputs.c
