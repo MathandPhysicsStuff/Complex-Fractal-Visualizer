@@ -47,14 +47,11 @@ void SIMD_render_burningship(SDL_Renderer* renderer,
 			{
 
 				_na = _mm256_sub_pd(_mm256_mul_pd(_a, _a), _mm256_mul_pd(_b, _b));
-				_nb = _mm256_mul_pd(_two, _mm256_mul_pd(_a, _b));
+				_nb = _mm256_mul_pd(_two, _mm256_andnot_pd(_minus, _mm256_mul_pd(_a, _b)));
 
-				//_a = _mm256_add_pd(_na, _re);
-				//_b = _mm256_add_pd(_nb, _im);
+				_a = _mm256_add_pd(_na, _re);
+				_b = _mm256_add_pd(_nb, _im);
 
-				_a = _mm256_andnot_pd(_minus, _mm256_add_pd(_na, _re));
-				_b = _mm256_andnot_pd(_minus, _mm256_add_pd(_nb, _im));
-				
 				_escape_time = _mm256_add_pd(_mm256_mul_pd(_a, _a), _mm256_mul_pd(_b, _b));
 				escape_time = (double*)&_escape_time;
 

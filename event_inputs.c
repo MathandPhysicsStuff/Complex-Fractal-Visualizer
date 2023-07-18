@@ -11,6 +11,7 @@ int key_events(SDL_Event event, FractalData *f)
 				f->x_point = 0, f->y_point = 0;
 				f->lxoff = 2, f->uxoff = 2;
 				f->lyoff = 2, f->uyoff = 2;
+				f->re = 0, f->im = 0;
 				f->iter = 256;
 				return 0;	
 				break;
@@ -38,6 +39,22 @@ int key_events(SDL_Event event, FractalData *f)
 				f->uxoff *= 1.2;
 				f->lyoff *= 1.2;
 				f->uyoff *= 1.2;
+				break;
+
+			case SDLK_LEFT:
+				f->re -= 0.05;
+				break;
+
+			case SDLK_RIGHT:
+				f->re += 0.05;
+				break;
+
+			case SDLK_UP:
+				f->im -= 0.05;
+				break;
+
+			case SDLK_DOWN:
+				f->im += 0.05;
 				break;
 		}
 	}

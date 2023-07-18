@@ -14,14 +14,11 @@ typedef struct FractalData
 
 	double xlb, xub;   //x lower/upper bounds  
 	double ylb, yub;   //y lower/upper bounds  
+
+	double re;	//real point
+	double im;	//imaginary point
 	
-	//start and stop for iteration	
-	int iter;
-	
-	//Fractal variables
-	double a, b;
-	double na, nb;		//next a and b
-	double re, im;		//real part imaginary part
+	int iter;	//iteration
 
 } FractalData;
  

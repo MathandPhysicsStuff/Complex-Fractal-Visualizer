@@ -16,8 +16,12 @@ typedef enum States
 {
 	MENU = 0,
 	MANDELBROT,
+	JULIA,
 	MANDELBAR,
-	BURNINGSHIP 
+	BURNINGSHIP,
+	BUFFALO,
+	CELTIC,
+	TESTFRACTAL 
 } States;
 
 static SDL_Window *window = NULL;
@@ -34,7 +38,7 @@ int main()
 	initalize();
 
 	SDL_Texture *fractals_text, *colors_text;
-	SDL_Texture *mandelbrot_text, *burningship_text, *tricorn_text;
+	SDL_Texture *mandelbrot_text, *julia_text, *burningship_text, *tricorn_text, *buffalo_text, *celtic_text;
 	SDL_Texture *gray_scale_text, *hsb_text;
 
 	window = SDL_CreateWindow("Hello SDL", 
@@ -57,8 +61,11 @@ int main()
 	
 	//Fractals text
 	mandelbrot_text = create_texture(renderer, font, "Mandelbrot Set", text_color);
+	julia_text = create_texture(renderer, font, "Julia Set", text_color);
 	burningship_text = create_texture(renderer, font, "Burning Ship", text_color);
 	tricorn_text = create_texture(renderer, font, "Mandelbar Set", text_color);
+	buffalo_text = create_texture(renderer, font, "Buffalo Fractal", text_color);
+	celtic_text = create_texture(renderer, font, "Celtic Fractal", text_color);
 
 	//Colors text
 	gray_scale_text = create_texture(renderer, font, "Gray Scale", text_color);
@@ -75,8 +82,13 @@ int main()
 	
 	//fractal button rects	
 	SDL_Rect mandelbrot_button = { .x = 24, .y = 96, .w = 128, .h = 32 };
+	SDL_Rect julia_button = { .x = 24, .y = 144, .w = 128, .h = 32 };
+
 	SDL_Rect burningship_button = { .x = 176, .y = 96, .w = 128, .h = 32 };
+	SDL_Rect buffalo_button = { .x = 176, .y = 144, .w = 128, .h = 32 };
+
 	SDL_Rect tricorn_button = { .x = 328, .y = 96, .w = 136, .h = 32 };
+	SDL_Rect celtic_button = { .x = 328, .y = 144, .w = 136, .h = 32 };
 
 	//color button rects
 	SDL_Rect gray_scale_button = { .x = 504, .y = 96, .w = 112, .h = 32 };
@@ -87,7 +99,8 @@ int main()
 	FractalData f = {
 					 .x_point = 0, .y_point = 0,
 				     .lxoff = 2,  .uxoff = 2,
-				     .lyoff = 2,  .uyoff = 2, 
+				     .lyoff = 2,  .uyoff = 2,
+					 .re = 0, .im = 0,
 				     .iter = 1024
 				    };
 
@@ -120,10 +133,8 @@ int main()
 				break;
             }
 			
-			switch (state)
+			if (state == MENU)
 			{
-				
-			case MENU:		
 				if (event.type == SDL_MOUSEBUTTONUP)
 				{
 					if(event.button.button == SDL_BUTTON_LEFT)
@@ -131,30 +142,21 @@ int main()
 						if(button_logic(event, mandelbrot_button, mouse) == SDL_TRUE) { state = MANDELBROT; }
 						if(button_logic(event, tricorn_button, mouse) == SDL_TRUE) { state = MANDELBAR; }
 						if(button_logic(event, burningship_button, mouse) == SDL_TRUE) { state = BURNINGSHIP; }
+						if(button_logic(event, julia_button, mouse) == SDL_TRUE) { state = JULIA; }
+						if(button_logic(event, buffalo_button, mouse) == SDL_TRUE) { state = BUFFALO; }
+						if(button_logic(event, celtic_button, mouse) == SDL_TRUE) { state = CELTIC; }
 
 						if(button_logic(event, gray_scale_button, mouse) == SDL_TRUE) { fractal_color = &gray_scale; }
 						else if(button_logic(event, hsb_button, mouse) == SDL_TRUE) { fractal_color = &hsv; }
 					}
 				}
-				break;
+			}
 			
-			case MANDELBROT:
+			else
+			{
 				if (key_events(event, &f) == 0) { state = MENU; }
 				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
 				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
-				break;
-			
-			case MANDELBAR:
-				if (key_events(event, &f) == 0) { state = MENU; }
-				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
-				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
-				break;
-	
-			case BURNINGSHIP:
-				if (key_events(event, &f) == 0) { state = MENU; }
-				mouse_button_events(event, &left_mouse_hold, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
-				scrollwheel_events(event, SCREEN_WIDTH, SCREEN_HEIGHT, &f);
-				break;
 			}
 		}
 			
@@ -180,11 +182,21 @@ int main()
 				button_render(renderer, mandelbrot_button, button_color);
 				render_texture(renderer, mandelbrot_text, mandelbrot_button);
 
+				button_render(renderer, julia_button, button_color);
+				render_texture(renderer, julia_text, julia_button);
+
 				button_render(renderer, burningship_button, button_color);
 				render_texture(renderer, burningship_text, burningship_button);
 
 				button_render(renderer, tricorn_button, button_color);
 				render_texture(renderer, tricorn_text, tricorn_button);
+
+				button_render(renderer, buffalo_button, button_color);
+				render_texture(renderer, buffalo_text, buffalo_button);
+
+				button_render(renderer, celtic_button, button_color);
+				render_texture(renderer, celtic_text, celtic_button);
+
 
 				button_render(renderer, gray_scale_button, button_color);
 				render_texture(renderer, gray_scale_text, gray_scale_button);
@@ -245,6 +257,59 @@ int main()
 				render_texture(renderer, timespec_text, timespec_button);
 
 				break;
+
+			case JULIA:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_julia_set(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+			case BUFFALO:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_buffalo(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+			case CELTIC:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_celtic(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+
 
 
 		}
