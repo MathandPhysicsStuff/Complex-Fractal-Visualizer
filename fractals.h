@@ -23,4 +23,16 @@ void SIMD_render_buffalo(SDL_Renderer *renderer, int screen_width, int screen_he
 
 void SIMD_render_celtic(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
 
+void SIMD_render_perp_burningship(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
+
+void SIMD_render_sharkfin(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
+
+void SIMD_render_sockpuppet(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
+
+void SIMD_render_alien(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
+
+void SIMD_render_crown(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
+
+void SIMD_render_pointed_celtic(SDL_Renderer *renderer, int screen_width, int screen_height, FractalData *f, colorf cf);
+
 #endif

@@ -3,8 +3,8 @@ CFLAGS = -O2 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf
 
 all: bin
 
-bin: main.o menu.o event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o
-	gcc $(CFLAGS) main.o menu.o  event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o -o bin
+bin: main.o menu.o event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o perp_burningship.o sharkfin.o sockpuppet.o alien.o crown.o pointed_celtic.o
+	gcc $(CFLAGS) main.o menu.o  event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o perp_burningship.o sharkfin.o sockpuppet.o alien.o crown.o pointed_celtic.o -o bin
 
 main.o: main.c
 	gcc $(CFLACGS) -c main.c
@@ -39,6 +39,23 @@ buffalo.o: buffalo.c
 celtic.o: celtic.c
 	gcc $(CFLAGS) -c celtic.c
 
+perp_burningship.o: perp_burningship.c
+	gcc $(CFLAGS) -c perp_burningship.c
+
+sharkfin.o: sharkfin.c
+	gcc $(CFLAGS) -c sharkfin.c
+
+sockpupper.o: sockpuppet.c
+	gcc $(CFLAGS) -c sockpuppet.c
+
+alien.o: alien.c
+	gcc $(CFLAGS) -c alien.c
+
+crown.o: crown.c
+	gcc $(CFLAGS) -c crown.c
+
+pointed_celtic.o: pointed_celtic.c
+	gcc $(CFLAGS) -c pointed_celtic.c
 
 clean:
 	rm -f *.o bin

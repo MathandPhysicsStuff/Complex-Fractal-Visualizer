@@ -21,6 +21,12 @@ typedef enum States
 	BURNINGSHIP,
 	BUFFALO,
 	CELTIC,
+	PERPBURNINGSHIP,
+	SHARKFIN,
+	SOCKPUPPET,
+	ALIEN,
+	CROWN,
+	POINTEDCELTIC,
 	TESTFRACTAL 
 } States;
 
@@ -38,7 +44,10 @@ int main()
 	initalize();
 
 	SDL_Texture *fractals_text, *colors_text;
+
 	SDL_Texture *mandelbrot_text, *julia_text, *burningship_text, *tricorn_text, *buffalo_text, *celtic_text;
+	SDL_Texture *perp_burningship_text, *sharkfin_text, *sockpuppet_text, *alien_text, *crown_text, *pointed_celtic_text;
+
 	SDL_Texture *gray_scale_text, *hsb_text;
 
 	window = SDL_CreateWindow("Hello SDL", 
@@ -66,6 +75,12 @@ int main()
 	tricorn_text = create_texture(renderer, font, "Mandelbar Set", text_color);
 	buffalo_text = create_texture(renderer, font, "Buffalo Fractal", text_color);
 	celtic_text = create_texture(renderer, font, "Celtic Fractal", text_color);
+	perp_burningship_text = create_texture(renderer, font, "Perp Burning Ship", text_color);
+	sharkfin_text = create_texture(renderer, font, "Shark Fin", text_color);
+	sockpuppet_text = create_texture(renderer, font, "Sock Puppet", text_color);
+	alien_text = create_texture(renderer, font, "Alien Fractal", text_color);
+	crown_text = create_texture(renderer, font, "Crown Fractal", text_color);
+	pointed_celtic_text = create_texture(renderer, font, "Pointed Celtic", text_color);
 
 	//Colors text
 	gray_scale_text = create_texture(renderer, font, "Gray Scale", text_color);
@@ -83,12 +98,18 @@ int main()
 	//fractal button rects	
 	SDL_Rect mandelbrot_button = { .x = 24, .y = 96, .w = 128, .h = 32 };
 	SDL_Rect julia_button = { .x = 24, .y = 144, .w = 128, .h = 32 };
+	SDL_Rect crown_button = { .x = 24, .y = 192, .w = 128, .h = 32 };
+	SDL_Rect alien_button = { .x = 24, .y = 240, .w = 128, .h = 32 };
 
 	SDL_Rect burningship_button = { .x = 176, .y = 96, .w = 128, .h = 32 };
 	SDL_Rect buffalo_button = { .x = 176, .y = 144, .w = 128, .h = 32 };
+	SDL_Rect perp_burningship_button = { .x = 176, .y = 192, .w = 128, .h = 32 };
+	SDL_Rect sharkfin_button = { .x = 176, .y = 240, .w = 128, .h = 32 };
 
 	SDL_Rect tricorn_button = { .x = 328, .y = 96, .w = 136, .h = 32 };
 	SDL_Rect celtic_button = { .x = 328, .y = 144, .w = 136, .h = 32 };
+	SDL_Rect pointed_celtic_button = { .x = 328, .y = 196, .w = 136, .h = 32 };
+	SDL_Rect sockpuppet_button = { .x = 328, .y = 240, .w = 136, .h = 32 };
 
 	//color button rects
 	SDL_Rect gray_scale_button = { .x = 504, .y = 96, .w = 112, .h = 32 };
@@ -145,6 +166,12 @@ int main()
 						if(button_logic(event, julia_button, mouse) == SDL_TRUE) { state = JULIA; }
 						if(button_logic(event, buffalo_button, mouse) == SDL_TRUE) { state = BUFFALO; }
 						if(button_logic(event, celtic_button, mouse) == SDL_TRUE) { state = CELTIC; }
+						if(button_logic(event, perp_burningship_button, mouse) == SDL_TRUE) { state = PERPBURNINGSHIP; }
+						if(button_logic(event, sharkfin_button, mouse) == SDL_TRUE) { state = SHARKFIN; }
+						if(button_logic(event, sockpuppet_button, mouse) == SDL_TRUE) { state = SOCKPUPPET; }
+						if(button_logic(event, alien_button, mouse) == SDL_TRUE) { state = ALIEN; }
+						if(button_logic(event, crown_button, mouse) == SDL_TRUE) { state = CROWN; }
+						if(button_logic(event, pointed_celtic_button, mouse) == SDL_TRUE) { state = POINTEDCELTIC; }
 
 						if(button_logic(event, gray_scale_button, mouse) == SDL_TRUE) { fractal_color = &gray_scale; }
 						else if(button_logic(event, hsb_button, mouse) == SDL_TRUE) { fractal_color = &hsv; }
@@ -178,7 +205,8 @@ int main()
 
 				render_texture(renderer, fractals_text, fractals_button);
 				render_texture(renderer, colors_text, colors_button);
-
+				
+				//Fractal buttons
 				button_render(renderer, mandelbrot_button, button_color);
 				render_texture(renderer, mandelbrot_text, mandelbrot_button);
 
@@ -196,8 +224,26 @@ int main()
 
 				button_render(renderer, celtic_button, button_color);
 				render_texture(renderer, celtic_text, celtic_button);
-
-
+	
+				button_render(renderer, perp_burningship_button, button_color);
+				render_texture(renderer, perp_burningship_text, perp_burningship_button);
+	
+				button_render(renderer, sharkfin_button, button_color);
+				render_texture(renderer, sharkfin_text, sharkfin_button);
+	
+				button_render(renderer, sockpuppet_button, button_color);
+				render_texture(renderer, sockpuppet_text, sockpuppet_button);
+	
+				button_render(renderer, alien_button, button_color);
+				render_texture(renderer, alien_text, alien_button);
+	
+				button_render(renderer, crown_button, button_color);
+				render_texture(renderer, crown_text, crown_button);
+	
+				button_render(renderer, pointed_celtic_button, button_color);
+				render_texture(renderer, pointed_celtic_text, pointed_celtic_button);
+				
+				//Color buttons
 				button_render(renderer, gray_scale_button, button_color);
 				render_texture(renderer, gray_scale_text, gray_scale_button);
 
@@ -309,8 +355,112 @@ int main()
 
 				break;
 
+			case PERPBURNINGSHIP:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_perp_burningship(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
 
 
+			case SHARKFIN:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_sharkfin(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+
+			case SOCKPUPPET:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_sockpuppet(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+
+			case ALIEN:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_alien(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+
+			case CROWN:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_crown(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
+
+
+			case POINTEDCELTIC:
+
+				timespec_font = TTF_OpenFont("DejaVuMathTeXGyre.ttf", 48);
+				timespec_get(&begin, TIME_UTC);
+				
+				SIMD_render_pointed_celtic(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, &f, fractal_color);
+			
+				timespec_get(&end, TIME_UTC);
+				time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+				sprintf(time_spent_str, "%f", time_spent);
+
+				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
+				TTF_CloseFont(timespec_font);
+				render_texture(renderer, timespec_text, timespec_button);
+
+				break;
 
 		}
 

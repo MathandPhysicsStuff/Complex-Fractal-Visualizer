@@ -1,7 +1,7 @@
 #include "fractals.h"
 
 
-void SIMD_render_buffalo(SDL_Renderer* renderer, 
+void SIMD_render_perp_burningship(SDL_Renderer* renderer, 
 						   int screen_width, int screen_height,
 						   FractalData *f, colorf cf)
 {	
@@ -46,8 +46,8 @@ void SIMD_render_buffalo(SDL_Renderer* renderer,
 			for (i = 0; i < f->iter; i++)
 			{
 
-				_na = _mm256_andnot_pd(_minus, _mm256_sub_pd(_mm256_mul_pd(_a, _a), _mm256_mul_pd(_b, _b)));
-				_nb = _mm256_mul_pd(_two, _mm256_andnot_pd(_minus, _mm256_mul_pd(_a, _b)));
+				_na = _mm256_sub_pd(_mm256_mul_pd(_a, _a), _mm256_mul_pd(_b, _b));
+				_nb = _mm256_mul_pd(_two, _mm256_mul_pd(_a, _mm256_andnot_pd(_minus, _b)));
 
 				_a = _mm256_add_pd(_na, _re);
 				_b = _mm256_add_pd(_nb, _im);
