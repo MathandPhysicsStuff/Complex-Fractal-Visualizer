@@ -114,6 +114,7 @@ int main()
 	//color button rects
 	SDL_Rect gray_scale_button = { .x = 504, .y = 96, .w = 112, .h = 32 };
 	SDL_Rect hsb_button = { .x = 504, .y = 144, .w = 112, .h = 32 };
+	SDL_Rect highlight_button = { .x = 504, .y = 96, .w = 112, .h = 32 };
 
 	States state = MENU;
 
@@ -122,7 +123,7 @@ int main()
 				     .lxoff = 2,  .uxoff = 2,
 				     .lyoff = 2,  .uyoff = 2,
 					 .re = 0, .im = 0,
-				     .iter = 1024
+				     .iter = 256
 				    };
 
 	colorf fractal_color = &gray_scale;
@@ -173,8 +174,16 @@ int main()
 						if(button_logic(event, crown_button, mouse) == SDL_TRUE) { state = CROWN; }
 						if(button_logic(event, pointed_celtic_button, mouse) == SDL_TRUE) { state = POINTEDCELTIC; }
 
-						if(button_logic(event, gray_scale_button, mouse) == SDL_TRUE) { fractal_color = &gray_scale; }
-						else if(button_logic(event, hsb_button, mouse) == SDL_TRUE) { fractal_color = &hsv; }
+						if(button_logic(event, gray_scale_button, mouse) == SDL_TRUE)
+						{ 
+							fractal_color = &gray_scale;
+							highlight_button.y = gray_scale_button.y;
+						}
+						else if(button_logic(event, hsb_button, mouse) == SDL_TRUE)
+						{ 
+							fractal_color = &hsv;
+							highlight_button.y = hsb_button.y;
+						}
 					}
 				}
 			}
@@ -245,9 +254,12 @@ int main()
 				
 				//Color buttons
 				button_render(renderer, gray_scale_button, button_color);
-				render_texture(renderer, gray_scale_text, gray_scale_button);
-
 				button_render(renderer, hsb_button, button_color);
+
+				SDL_SetRenderDrawColor(renderer, 200, 32, 32, 255);
+				SDL_RenderFillRect(renderer, &highlight_button);
+
+				render_texture(renderer, gray_scale_text, gray_scale_button);
 				render_texture(renderer, hsb_text, hsb_button);
 
 				break;
