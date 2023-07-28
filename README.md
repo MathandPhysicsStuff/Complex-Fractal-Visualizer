@@ -30,9 +30,7 @@ If your cpu is newer than 2013 it should be fine, probably.
 
 ## Images
 
-![Mandelbrot set 1]([fractal-images/mandelbrot1.png](https://github.com/MathandPhysicsStuff/Complex-Fractal-Visualizer/blob/main/fractal-images/mandelbrot1.png)https://github.com/MathandPhysicsStuff/Complex-Fractal-Visualizer/blob/main/fractal-images/mandelbrot1.png)
-
-
+![Mandelbrot set 1](fracral-images/mandelbrot1.png)
 
 
 
