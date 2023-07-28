@@ -51,11 +51,8 @@ If your cpu is newer than 2013 it should be fine, probably.
 #### Burning ship fractal image 1
 ![burningship1](fractal-images/burningship1.png)
 
-#### Burning ship fractal image 2
-![burningship2](fractal-images/burningship2.png)
-
 #### Pointer Celtic fractal
-![pointedceltic1](fractal-images/pointedceltic1.png)
+![pointedceltic1](fractal-images/pointedceltic.png)
 
 #### Crown fractal
 ![crown1](fractal-images/crown1.png)
