@@ -28,6 +28,9 @@ If your cpu is newer than 2013 it should be fine, probably.
 ### arrow keys
 * the arrow keys move around the c constant in the Julia set
 
+## Images
+
+![Mandelbrot set 1](fractal-images/mandelbrot1.png)
 
 
 
