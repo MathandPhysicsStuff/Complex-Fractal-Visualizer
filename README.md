@@ -10,6 +10,10 @@ A real time rendering tool for visualizing complex fractals such as the Mandelbr
 I used avx2 (Advanced Vector Extensions) to speed up the rendering so if your using a cpu created before 2013 this code will not work on your machine.
 If your cpu is newer than 2013 it should be fine, probably.
 
+## Building
+* `make`
+* then `make clean` to get rid of .o files
+
 ## Key Binds
 
 ### mouse
