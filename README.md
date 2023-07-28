@@ -30,7 +30,6 @@ If your cpu is newer than 2013 it should be fine, probably.
 
 ## Images
 
-![Mandelbrot set 1](fracral-images/mandelbrot1.png)
 ![](fractal-images/mandelbrot1.png)
 
 
