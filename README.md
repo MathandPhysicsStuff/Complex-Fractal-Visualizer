@@ -19,8 +19,7 @@ If your cpu is newer than 2013 it should be fine, probably.
 ### escape
 * returns to menu
 
-### i
-* increases iterations
+### i * increases iterations
 
 ### o
 * decreases iterations
