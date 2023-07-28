@@ -452,7 +452,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
