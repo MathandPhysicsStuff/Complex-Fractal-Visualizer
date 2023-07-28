@@ -30,15 +30,40 @@ If your cpu is newer than 2013 it should be fine, probably.
 
 ## Images
 
-![Mandelbrot1](fractal-images/mandelbrot1.png)
+Menu
+![menu](fractal-images/menu11.png)
 
-![Mandelbrot2](fractal-images/mandelbrot2.png)
+Mandelbrot set image 1
+![mandelbrot1](fractal-images/mandelbrot1.png)
 
-![Mandelbrot3](fractal-images/mandelbrot3.png)
+Mandelbrot set image 2
+![mandelbrot2](fractal-images/mandelbrot2.png)
 
-![Julia1](fractal-images/julia1.png)
+Mandelbrot set image 2
+![mandelbrot3](fractal-images/mandelbrot3.png)
 
-![Julia2](fractal-images/julia2.png)
+Julia set image 1
+![julia1](fractal-images/julia1.png)
+
+Julia set image 2
+![julia2](fractal-images/julia2.png)
+
+Burning ship fractal image 1
+![burningship1](fractal-images/burningship1.png)
+
+Burning ship fractal image 2
+![burningship2](fractal-images/burningship2.png)
+
+Pointer Celtic fractal
+![pointedceltic1](fractal-images/pointedceltic1.png)
+
+Crown fractal
+![crown1](fractal-images/crown1.png)
+
+Sharkfin fractal
+![sharkfin1](fractal-images/sharkfin1.png)
+
+
 
 
 
