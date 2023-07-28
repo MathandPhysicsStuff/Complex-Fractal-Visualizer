@@ -11,8 +11,9 @@ I used avx2 (Advanced Vector Extensions) to speed up the rendering so if your us
 If your cpu is newer than 2013 it should be fine, probably.
 
 ## Building
-* `make`
+* `make` to build
 * then `make clean` to get rid of .o files
+* `./bin` to run
 
 ## Key Binds
 
