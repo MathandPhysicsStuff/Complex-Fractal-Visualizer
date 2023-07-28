@@ -15,21 +15,16 @@ If your cpu is newer than 2013 it should be fine, probably.
 ### mouse
 * left click and drag to move around
 * scroll wheel to zoom in and out
-
 ### escape
 * returns to menu
-
-### i * increases iterations
-
+### i 
+* increases iterations
 ### o
 * decreases iterations
-
 ### z
 * zoom in around center of screen
-
 ### x
 * zoom out around center of screen
-
 ### arrow keys
 * the arrow keys move around the c constant in the Julia set
 
