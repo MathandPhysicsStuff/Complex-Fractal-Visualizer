@@ -30,11 +30,15 @@ If your cpu is newer than 2013 it should be fine, probably.
 
 ## Images
 
-![](fractal-images/mandelbrot1.png)
+![Mandelbrot1](fractal-images/mandelbrot1.png)
 
+![Mandelbrot2](fractal-images/mandelbrot2.png)
 
+![Mandelbrot3](fractal-images/mandelbrot3.png)
 
+![Julia1](fractal-images/julia1.png)
 
+![Julia2](fractal-images/julia2.png)
 
 
 
