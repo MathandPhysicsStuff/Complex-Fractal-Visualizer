@@ -61,7 +61,7 @@ If your cpu is newer than 2013 it should be fine, probably.
 #### Crown fractal image 1
 ![crown0](fractal-images/crown0.png)
 
-#### Crown fractal image 1
+#### Crown fractal image 2
 ![crown1](fractal-images/crown1.png)
 
 #### Sharkfin fractal
