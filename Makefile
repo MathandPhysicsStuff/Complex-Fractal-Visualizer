@@ -58,7 +58,7 @@ pointed_celtic.o: pointed_celtic.c
 	gcc $(CFLAGS) -c pointed_celtic.c
 
 clean:
-	rm -f *.o bin
+	rm -f *.o
 
 
 
