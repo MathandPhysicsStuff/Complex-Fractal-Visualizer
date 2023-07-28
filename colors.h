@@ -7,9 +7,9 @@
 #include "SDL2/SDL.h"
 #include "fractal_struct.h"
 
-typedef void (*colorf)(int*, int, int);
+typedef void (*colorf)(FractalData* f, int*, int, int);
 
-void gray_scale(int *color, int i, int brightness);
-void hsv(int *color, int i, int brightness);
+void gray_scale(FractalData* f, int *color, int i, int brightness);
+void hsv(FractalData* f, int *color, int i, int brightness);
 
 #endif 

@@ -1,13 +1,13 @@
 #include "colors.h"
 
-void gray_scale(int *color, int i, int brightness)
+void gray_scale(FractalData *f, int *color, int i, int brightness)
 {
 	color[0] = (i%259)*brightness;
 	color[1] = (i%259)*brightness;
 	color[2] = (i%259)*brightness;
 }
 
-void hsv(int *color, int i, int brightness)
+void hsv(FractalData *f, int *color, int i, int brightness)
 {
 	double r, g, b; //red green blue
 	double h, s, v; //hue saturation value
@@ -33,8 +33,9 @@ void hsv(int *color, int i, int brightness)
 	color[2] = (b+m)*(255*brightness);
 }
 
+
 /*
-void hsv(int *color, int i, int brightness)
+void hsv(FractalData* f, int *color, int i, int brightness)
 {
 	double r, g, b; //red green blue
 	double h, s, v; //hue saturation value

@@ -70,7 +70,7 @@ void SIMD_render_sockpuppet(SDL_Renderer* renderer,
 			
 			for (k = 0; k < 4; k++)
 			{
-				cf(color, color_input[k], brightness[k]);
+				cf(f, color, color_input[k], brightness[k]);
 				SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 				SDL_RenderDrawPoint(renderer, x+k, y);
 			}

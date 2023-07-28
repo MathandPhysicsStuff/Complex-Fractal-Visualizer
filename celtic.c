@@ -49,9 +49,6 @@ void SIMD_render_celtic(SDL_Renderer* renderer,
 				_na = _mm256_andnot_pd(_minus, _mm256_sub_pd(_mm256_mul_pd(_a, _a), _mm256_mul_pd(_b, _b)));
 				_nb = _mm256_mul_pd(_two, _mm256_mul_pd(_a, _b));
 
-				//_a = _mm256_andnot_pd(_minus, _mm256_add_pd(_na, _re));
-				//_b = _mm256_andnot_pd(_minus, _mm256_add_pd(_nb, _im));
-
 				_a = _mm256_add_pd(_na, _re);
 				_b = _mm256_add_pd(_nb, _im);
 
@@ -73,7 +70,7 @@ void SIMD_render_celtic(SDL_Renderer* renderer,
 			
 			for (k = 0; k < 4; k++)
 			{
-				cf(color, color_input[k], brightness[k]);
+				cf(f, color, color_input[k], brightness[k]);
 				SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 				SDL_RenderDrawPoint(renderer, x+k, y);
 			}

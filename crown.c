@@ -34,11 +34,11 @@ void SIMD_render_crown(SDL_Renderer* renderer,
 		{
 			_x = _mm256_set_pd(x+3, x+2, x+1, x);
 
-			_a = _mm256_add_pd(_xlb, _mm256_mul_pd(_x, _x_scale));
-			_b = _mm256_add_pd(_ylb, _mm256_mul_pd(_y, _y_scale));
+			_b = _mm256_add_pd(_xlb, _mm256_mul_pd(_x, _x_scale));
+			_a = _mm256_add_pd(_ylb, _mm256_mul_pd(_y, _y_scale));
 
-			_re = _a;
-			_im = _b;
+			_re = _b;
+			_im = _a;
 
 			int lock[4] = {0, 0, 0, 0};
 			int brightness[4] = {0, 0, 0, 0};
@@ -46,11 +46,11 @@ void SIMD_render_crown(SDL_Renderer* renderer,
 			for (i = 0; i < f->iter; i++)
 			{
 
-				_na = _mm256_andnot_pd(_minus, _mm256_sub_pd(_mm256_mul_pd(_a, _mm256_andnot_pd(_minus, _a)), _mm256_mul_pd(_b, _b)));
-				_nb = _mm256_mul_pd(_minus_two, _mm256_mul_pd(_mm256_andnot_pd(_minus, _a), _b));
+				_nb = _mm256_andnot_pd(_minus, _mm256_sub_pd(_mm256_mul_pd(_a, _mm256_andnot_pd(_minus, _a)), _mm256_mul_pd(_b, _b)));
+				_na = _mm256_mul_pd(_minus_two, _mm256_mul_pd(_mm256_andnot_pd(_minus, _a), _b));
 
-				_a = _mm256_add_pd(_na, _re);
-				_b = _mm256_add_pd(_nb, _im);
+				_b = _mm256_add_pd(_na, _re);
+				_a = _mm256_add_pd(_nb, _im);
 
 				_escape_time = _mm256_add_pd(_mm256_mul_pd(_a, _a), _mm256_mul_pd(_b, _b));
 				escape_time = (double*)&_escape_time;
@@ -70,7 +70,7 @@ void SIMD_render_crown(SDL_Renderer* renderer,
 			
 			for (k = 0; k < 4; k++)
 			{
-				cf(color, color_input[k], brightness[k]);
+				cf(f, color, color_input[k], brightness[k]);
 				SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 				SDL_RenderDrawPoint(renderer, x+k, y);
 			}
@@ -86,6 +86,7 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 	//double hue;
 	int color[3];
 	int x, y, i;
+	int brightness = 0;
 
 	double a, b, na, nb, re, im;
 
@@ -103,6 +104,7 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 			im = b;
 
 			i = 0;
+			brightness = 0;
 			while (i < f->iter)
 			{
 				na = a*a - b*b;
@@ -111,12 +113,18 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 				a = na + re;
 			    b = nb + im;
 
-				if (a*a + b*b > 4) break;
+				f->rad = sqrt(a*a + b*b);
+
+				if (a*a + b*b > 4)
+				{
+					brightness = 1;
+					break;
+				}
 
 				i++;
 			}
 
-			//cf(f, color, i);
+			cf(f, color, i, brightness);
 			SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 			SDL_RenderDrawPoint(renderer, x, y);
 		}

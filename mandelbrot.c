@@ -69,7 +69,7 @@ void SIMD_render_mandelbrot_set(SDL_Renderer* renderer,
 			
 			for (k = 0; k < 4; k++)
 			{
-				cf(color, color_input[k], brightness[k]);
+				cf(f, color, color_input[k], brightness[k]);
 				SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 				SDL_RenderDrawPoint(renderer, x+k, y);
 			}
@@ -77,7 +77,7 @@ void SIMD_render_mandelbrot_set(SDL_Renderer* renderer,
 	}	
 }
 
-/*
+
 void render_mandelbrot_set(SDL_Renderer* renderer, 
 						   int screen_width, int screen_height,
 						   FractalData *f, colorf cf)
@@ -85,6 +85,7 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 	//double hue;
 	int color[3];
 	int x, y, i;
+	int brightness = 1; 
 
 	double a, b, na, nb, re, im;
 
@@ -102,6 +103,9 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 			im = b;
 
 			i = 0;
+
+			brightness = 1;
+
 			while (i < f->iter)
 			{
 				na = a*a - b*b;
@@ -110,16 +114,24 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 				a = na + re;
 			    b = nb + im;
 
-				if (a*a + b*b > 4) break;
+				f->rad = sqrt(a*a + b*b);
+				
+				/*
+				if (a*a + b*b > 4)
+				{
+					brightness = 1;
+					break;
+				}
+				*/
 
 				i++;
 			}
 
-			//cf(f, color, i);
+			cf(f, color, i, brightness);
 			SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], 255);
 			SDL_RenderDrawPoint(renderer, x, y);
 		}
 	}	
 }
-*/
+
 

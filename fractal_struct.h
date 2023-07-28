@@ -20,6 +20,9 @@ typedef struct FractalData
 	
 	int iter;	//iteration
 
+	//coloring variables
+	double rad; //radius 
+
 } FractalData;
  
 #endif
