@@ -12,8 +12,9 @@ void hsv(FractalData *f, int *color, int i, int brightness)
 	double r, g, b; //red green blue
 	double h, s, v; //hue saturation value
 	double c, x, m;
+    int shift = 0; //200;
 
-	h = i%359;
+	h = (i+shift)%359;
 	v = 1;
 	s = 1; 
 	

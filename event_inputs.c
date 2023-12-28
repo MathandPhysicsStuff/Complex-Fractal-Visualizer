@@ -122,10 +122,10 @@ void scrollwheel_events(SDL_Event event, int screen_width, int screen_height, Fr
 		}
 		else if (event.wheel.y < 0)
 		{
-			f->lxoff *= 1.2;
-			f->uxoff *= 1.2;
-			f->lyoff *= 1.2;
-			f->uyoff *= 1.2;
+			f->lxoff *= 2.8;
+			f->uxoff *= 2.8;
+			f->lyoff *= 2.8;
+			f->uyoff *= 2.8;
 		}
 	}
 }

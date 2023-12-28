@@ -1,3 +1,4 @@
+#set noexpandtab
 
 CFLAGS = -O2 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf 
 

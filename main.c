@@ -123,7 +123,7 @@ int main()
 				     .lxoff = 2,  .uxoff = 2,
 				     .lyoff = 2,  .uyoff = 2,
 					 .re = 0, .im = 0,
-				     .iter = 256
+				     .iter = 64 
 				    };
 
 	colorf fractal_color = &gray_scale;
@@ -278,7 +278,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -295,7 +295,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -312,7 +312,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -329,7 +329,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -346,7 +346,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -363,7 +363,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -380,7 +380,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -398,7 +398,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -416,7 +416,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -434,7 +434,7 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
@@ -470,14 +470,14 @@ int main()
 
 				timespec_text = create_texture(renderer, timespec_font, time_spent_str, timespec_text_color);
 				TTF_CloseFont(timespec_font);
-				render_texture(renderer, timespec_text, timespec_button);
+				//render_texture(renderer, timespec_text, timespec_button);
 
 				break;
 
 		}
 
         SDL_RenderPresent(renderer);
-        SDL_Delay(100);
+        SDL_Delay(1);
     }
 	
 	free_memory(window);	
