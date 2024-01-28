@@ -11,9 +11,10 @@ void SIMD_render_mandelbrot_set(SDL_Renderer* renderer,
 	int color_input[4];
 	
 	double *escape_time;
+    double screen_scale = fmax(screen_width, screen_height);
 
-	double x_scale = (f->xub - f->xlb) / screen_width;
-	double y_scale = (f->yub - f->ylb) / screen_height;
+	double x_scale = (f->xub - f->xlb) / screen_scale;
+	double y_scale = (f->yub - f->ylb) / screen_scale;
 
 	__m256d _x, _y, _a, _b, _na, _nb, _re, _im;
 	__m256d _xlb, _ylb, _x_scale, _y_scale;
@@ -90,7 +91,7 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 	double a, b, na, nb, re, im;
 
 	double x_scale = (f->xub - f->xlb) / screen_width;
-	double y_scale = (f->yub - f->ylb) / screen_height;
+	double y_scale = (f->yub - f->ylb) / screen_width;
 
 	for (y = 0; y < screen_height; y++)
 	{
@@ -116,13 +117,13 @@ void render_mandelbrot_set(SDL_Renderer* renderer,
 
 				f->rad = sqrt(a*a + b*b);
 				
-				/*
+				
 				if (a*a + b*b > 4)
 				{
 					brightness = 1;
 					break;
 				}
-				*/
+				
 
 				i++;
 			}

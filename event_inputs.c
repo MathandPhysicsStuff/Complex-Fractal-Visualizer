@@ -63,6 +63,7 @@ int key_events(SDL_Event event, FractalData *f)
 void mouse_button_events(SDL_Event event, SDL_bool *holdm, int screen_width, int screen_height, FractalData *f)
 {
 	SDL_Point mouse = {event.button.x, event.button.y};
+    double screen_scale = fmax(screen_width, screen_height);
 	
 	if (event.type == SDL_MOUSEBUTTONUP)
 	{
@@ -84,8 +85,8 @@ void mouse_button_events(SDL_Event event, SDL_bool *holdm, int screen_width, int
 
 	if (*holdm == SDL_TRUE)
 	{
-		f->fx_mp = 0 + (f->x_mp - mouse.x) * ((f->xub - f->xlb) / screen_width); 	
-		f->fy_mp = 0 + (f->y_mp - mouse.y) * ((f->yub - f->ylb) / screen_height); 	
+		f->fx_mp = 0 + (f->x_mp - mouse.x) * ((f->xub - f->xlb) / screen_scale); 	
+		f->fy_mp = 0 + (f->y_mp - mouse.y) * ((f->yub - f->ylb) / screen_scale); 	
 
 		f->x_point += f->fx_mp;
 		f->y_point += f->fy_mp;
@@ -98,12 +99,14 @@ void mouse_button_events(SDL_Event event, SDL_bool *holdm, int screen_width, int
 void scrollwheel_events(SDL_Event event, int screen_width, int screen_height, FractalData *f)
 {
 	int x_mouse, y_mouse;
+    double screen_scale = fmax(screen_width, screen_height);
+
 	if (event.type == SDL_MOUSEWHEEL)
 	{
 		SDL_GetMouseState(&x_mouse, &y_mouse);
 
-		f->fx_mp = f->xlb + x_mouse * (f->xub - f->xlb) / screen_width;
-		f->fy_mp = f->ylb + y_mouse * (f->yub - f->ylb) / screen_height;
+		f->fx_mp = f->xlb + x_mouse * (f->xub - f->xlb) / screen_scale;
+		f->fy_mp = f->ylb + y_mouse * (f->yub - f->ylb) / screen_scale;
 
 		f->x_point = f->fx_mp;
 		f->y_point = f->fy_mp;

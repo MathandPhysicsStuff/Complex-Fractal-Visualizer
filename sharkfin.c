@@ -11,9 +11,10 @@ void SIMD_render_sharkfin(SDL_Renderer* renderer,
 	int color_input[4];
 	
 	double *escape_time;
+    double screen_scale = fmax(screen_width, screen_height);
 
-	double x_scale = (f->xub - f->xlb) / screen_width;
-	double y_scale = (f->yub - f->ylb) / screen_height;
+	double x_scale = (f->xub - f->xlb) / screen_scale;
+	double y_scale = (f->yub - f->ylb) / screen_scale;
 
 	__m256d _x, _y, _a, _b, _na, _nb, _re, _im;
 	__m256d _xlb, _ylb, _x_scale, _y_scale;

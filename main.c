@@ -33,8 +33,8 @@ typedef enum States
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 640;
+const int SCREEN_WIDTH = 1280; //640; //405; 
+const int SCREEN_HEIGHT = 720; //576;
 const int HALF_WIDTH = SCREEN_WIDTH / 2;
 const int HALF_HEIGHT = SCREEN_HEIGHT / 2;
 
@@ -123,10 +123,11 @@ int main()
 				     .lxoff = 2,  .uxoff = 2,
 				     .lyoff = 2,  .uyoff = 2,
 					 .re = 0, .im = 0,
-				     .iter = 64 
+				     .iter = 256 
 				    };
 
 	colorf fractal_color = &gray_scale;
+	//colorf fractal_color = &hsv;
 
 	SDL_bool left_mouse_hold = SDL_FALSE;
 	
@@ -477,7 +478,7 @@ int main()
 		}
 
         SDL_RenderPresent(renderer);
-        SDL_Delay(1);
+        //SDL_Delay(1);
     }
 	
 	free_memory(window);	
