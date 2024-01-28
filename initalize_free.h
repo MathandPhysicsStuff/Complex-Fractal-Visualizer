@@ -6,6 +6,6 @@
 #include "SDL2/SDL_ttf.h"
 	
 void initalize();
-void free_memory(SDL_Window* window);
+void free_memory(SDL_Window* window, SDL_Renderer* renderer);
 
 #endif

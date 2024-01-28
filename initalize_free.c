@@ -20,9 +20,10 @@ void initalize()
 	}
 }
 
-void free_memory(SDL_Window* window)
+void free_memory(SDL_Window* window, SDL_Renderer* renderer)
 {
 	TTF_Quit();
+	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }

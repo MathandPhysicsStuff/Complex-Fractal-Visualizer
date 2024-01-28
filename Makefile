@@ -4,8 +4,8 @@ CFLAGS = -O2 -mavx2 -lm -lSDL2 -lSDL2main -lSDL2_ttf
 
 all: bin
 
-bin: main.o menu.o event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o perp_burningship.o sharkfin.o sockpuppet.o alien.o crown.o pointed_celtic.o
-	gcc $(CFLAGS) main.o menu.o  event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o perp_burningship.o sharkfin.o sockpuppet.o alien.o crown.o pointed_celtic.o -o bin
+bin: main.o menu.o event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o perp_burningship.o sharkfin.o sockpuppet.o alien.o crown.o pointed_celtic.o more_fractals.o
+	gcc $(CFLAGS) main.o menu.o  event_inputs.o colors.o initalize_free.o mandelbrot.o burningship.o mandelbar.o julia.o buffalo.o celtic.o perp_burningship.o sharkfin.o sockpuppet.o alien.o crown.o pointed_celtic.o more_fractals.c -o bin
 
 main.o: main.c
 	gcc $(CFLACGS) -c main.c
@@ -57,6 +57,9 @@ crown.o: crown.c
 
 pointed_celtic.o: pointed_celtic.c
 	gcc $(CFLAGS) -c pointed_celtic.c
+
+more_fractals.o: more_fractals.c
+	gcc $(CFLAGS) -c more_fractals.c
 
 clean:
 	rm -f *.o
